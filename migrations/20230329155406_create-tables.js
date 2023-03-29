@@ -28,7 +28,6 @@ exports.up = async function(knex) {
         .notNullable()
     table.integer("step_number")
         .notNullable()
-        .unique()
     table.integer("recipe_id")
         .unsigned()
         .notNullable()
