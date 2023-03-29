@@ -7,6 +7,7 @@ async function getRecipeById(recipe_id) {
     .join("steps as s", "r.recipe_id", "s.recipe_id")
     .leftJoin("step_ingredients as si", "s.step_id", "si.step_id")
     .leftJoin("ingredients as i", "i.ingredient_id", "si.ingredient_id")
+    .orderBy("s.step_number")
     .where("r.recipe_id", recipe_id);
     
     let res = {
