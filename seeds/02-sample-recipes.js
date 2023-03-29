@@ -3,12 +3,6 @@
  * @returns { Promise<void> } 
  */
 exports.seed = async function(knex) {
-
-  // Deletes ALL existing entries
-  await knex('recipes').truncate()
-  await knex('ingredients').truncate()
-  await knex('steps').truncate()
-  await knex('step_ingredients').truncate()
   
   await knex('recipes').insert([
     {recipe_name: "oatmeal"},
