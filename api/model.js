@@ -15,7 +15,9 @@ async function getRecipeById(recipe_id) {
         created_at: rows[0].created_at
     };
 
-    const steps = rows.reduce( (acc, row) => {
+    console.log(rows);
+
+    const { steps } = rows.reduce( (acc, row) => {
         if(row.step_number)
             acc.steps.push({
                 step_id: row.step_id,
