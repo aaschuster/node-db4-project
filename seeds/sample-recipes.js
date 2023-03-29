@@ -45,8 +45,8 @@ exports.seed = async function(knex) {
     //pizza steps
     {recipe_id:2, step_number: 1, step_instructions: "Toss dough"},         
     {recipe_id:2, step_number: 2, step_instructions: "Top with sauce and cheese"}, 
-    {recipe_id:2, step_number: 4, step_instructions: "Bake!"},                           
-    {recipe_id:2, step_number: 5, step_instructions: "Slice and serve"}                  
+    {recipe_id:2, step_number: 3, step_instructions: "Bake!"},                           
+    {recipe_id:2, step_number: 4, step_instructions: "Slice and serve"}                  
 
   ]);
 
