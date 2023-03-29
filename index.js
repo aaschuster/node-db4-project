@@ -1,6 +1,4 @@
-const express = require("express");
-
-const server = express();
+const server = require("./server");
 
 const port = 9000;
 
