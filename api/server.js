@@ -8,7 +8,7 @@ const Recipes = require("./model");
 server.get("/api/recipes/:id", (req, res) => {
     Recipes.getRecipeById(req.params.id)
         .then( recipe => res.json(recipe))
-        .catch( () => res.status(500).json({message: "There was an issue with the server"}));
+        .catch( err => res.status(500).json({message: err.message}));
 })
 
 module.exports = server;
