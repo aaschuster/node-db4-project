@@ -9,53 +9,42 @@ async function getRecipeById(recipe_id) {
     .leftJoin("ingredients as i", "i.ingredient_id", "si.ingredient_id")
     .orderBy("s.step_number")
     .where("r.recipe_id", recipe_id);
-    
-    let res = {
+
+    const res = {
         recipe_id: rows[0].recipe_id,
         recipe_name: rows[0].recipe_name,
-        created_at: rows[0].created_at
-    };
+        steps: rows.reduce( (acc, row) => {
 
-    const steps = [{
-        step_id: rows[0].step_id,
-        step_number: rows[0].step_number,
-        step_instructions: rows[0].step_instructions,
-        ingredients: []
-    }];
-
-    rows.forEach ( row => {
-        if(!row.step_id) return;
-        let stepExists = false;
-        steps.forEach( step => {
-            if(step.step_id === row.step_id) {
-                stepExists = true;
-            }
-        })
-        if (!stepExists) {
-            steps.push({
+            const stepObj = {
                 step_id: row.step_id,
                 step_number: row.step_number,
                 step_instructions: row.step_instructions,
-                ingredients: []                
-            })
-        }
-    })
+                ingredients: []
+            }
 
-    rows.forEach (row => {
-        if(row.ingredient_id) {
-            steps.forEach ( step => {
-                if(row.step_id === step.step_id) {
-                    step.ingredients.push({
-                        ingredient_id: row.ingredient_id,
-                        ingredient_name: row.ingredient_name,
-                        quantity: row.quantity
-                    })
-                }
-            })
-        }
-    })
+            const ingredientObj = {
+                ingredient_id: row.ingredient_id,
+                ingredient_name: row.ingredient_name,
+                quantity: row.quantity
+            }
 
-    res = {...res, steps};
+
+            if(!row.ingredient_id) {
+                return acc.concat(stepObj);
+            }
+
+            const currentStep = acc.find(step => step.step_id === row.step_id);
+
+            if(!currentStep) {
+                stepObj.ingredients.push(ingredientObj);
+                return acc.concat(stepObj);
+            }
+
+            currentStep.ingredients.push(ingredientObj);
+
+            return acc;
+        }, [])
+    }
 
     return res;
 }
